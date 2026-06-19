@@ -8,7 +8,7 @@ Great for confirming everything works before touching the API.
 """
 
 from app.database import Base, engine, SessionalLocal
-from app import crud, models
+from app import crud
 
 def main():
     Base.metadata.create_all(bind=engine)
