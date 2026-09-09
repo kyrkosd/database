@@ -1,12 +1,12 @@
-"""""
+"""
 Database setup: engine, session, and base class.
 
 This is the core wiring. Everything else imports from here.
 Swapping to postgresql later= change DATABASE_URL only
 
 """
-from sqlchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 #Sqlite stores the whole DB in a single file (app.db) next to your code.
 #For postgresql later, this becomes e.g.:
@@ -14,7 +14,7 @@ from sqlalchemy.orm import sessionmaker
 
 DATABASE_URL = "sqlite:///./app.db"
 
-#check_name_thread=False is needed only for sqlite, not for postgresql
+#check_same_thread=False is needed only for sqlite, not for postgresql
 #because the request to the DB is made from a different thread than the one that created the engine.
 
 engine = create_engine(
@@ -28,7 +28,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Base(DeclarativeBase):
     """All models inherit from this. Sqlalchemy uses it to track tables."""
-pass
+    pass
 
 def get_db():
     """Dependancy that hands a session to a request, then always closes it.
